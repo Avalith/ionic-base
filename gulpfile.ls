@@ -3,6 +3,7 @@ pkg = require \./package.json
 
 $ = gulpLoadPlugins(/*lazy: false*/)
 
+# TODO watch?
 # TODO add plumber
 # TODO fix the log in git-check
 
@@ -16,6 +17,7 @@ gulp.task \bump, require \gulp-cordova-bump
 
 gulp.task \scss, (done)!->
 	gulp.src 'src/scss/ionic.app.scss'
+		.pipe $.plumber errorHandler: $.notify.onError "\n\n===== Error: SCSS =====\n\n<%= error.message %>\n\n"
 		.pipe $.sass!
 		.pipe gulp.dest \./www/dist/css/
 		.pipe $.minifyCss keepSpecialComments: 0
@@ -25,6 +27,7 @@ gulp.task \scss, (done)!->
 
 gulp.task \build, ->
 	gulp.src 'src/js/**/*.js'
+		.pipe $.plumber errorHandler: $.notify.onError "\n\n===== Error: Build =====\n\n<%= error.message %>\n\n"
 		.pipe $.sourcemaps.init!
 		.pipe $.ngAnnotate single_quotes: true
 		.pipe $.concat \app.js
@@ -44,7 +47,7 @@ gulp.task \watch, ->
 	gulp.watch paths.templates	, [ \templates ]
 
 gulp.task \install, [ \git-check ], ->
-	bower.commands.install!.on \log, (data)-> util.log(\bower, util.colors.cyan data.id, data.message)
+	bower.commands.install!.on \log, (data)-> util.log \bower, util.colors.cyan data.id, data.message
 
 gulp.task \git-check, (done)!->
 	unless shelljs.which \git
