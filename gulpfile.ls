@@ -15,8 +15,6 @@ paths =
 gulp.task \bump, require \gulp-cordova-bump
 
 gulp.task \scss, (done)!->
-	console.log gulp.dest
-	
 	gulp.src 'src/scss/ionic.app.scss'
 		.pipe $.sass!
 		.pipe gulp.dest \./www/dist/css/
