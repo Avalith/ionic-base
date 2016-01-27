@@ -13,6 +13,23 @@ paths =
 	templates	: [ 'src/templates/**/*.html' ]
 
 
+gulp.task \git-check, (done)!->
+	unless shelljs.which \git
+		console.log 'fix meh'
+		# console.log(
+		# 	'  ' + util.colors.red('Git is not installed.')
+		# 	'\n  Git, the version control system, is required to download Ionic.'
+		# 	'\n  Download git here:', util.colors.cyan('http://git-scm.com/downloads') + '.'
+		# 	'\n  Once git is installed, run \'' + util.colors.cyan('gulp install') + '\' again.'
+		# )
+		
+		process.exit 1
+	
+	done!
+
+gulp.task \install, [ \git-check ], ->
+	bower.commands.install!.on \log, (data)-> util.log \bower, util.colors.cyan data.id, data.message
+
 gulp.task \bump, require \gulp-cordova-bump
 
 gulp.task \scss, (done)!->
@@ -41,26 +58,10 @@ gulp.task \templates, ->
 		.pipe $.angularTemplatecache \templates.js, { module: \starter, root: \templates/ }
 		.pipe gulp.dest \www/dist
 
+gulp.task \default, [ \scss, \templates, \build ]
+
 gulp.task \watch, ->
 	gulp.watch paths.scss		, [ \scss ]
 	gulp.watch paths.js			, [ \build ]
 	gulp.watch paths.templates	, [ \templates ]
 
-gulp.task \install, [ \git-check ], ->
-	bower.commands.install!.on \log, (data)-> util.log \bower, util.colors.cyan data.id, data.message
-
-gulp.task \git-check, (done)!->
-	unless shelljs.which \git
-		console.log 'fix meh'
-		# console.log(
-		# 	'  ' + util.colors.red('Git is not installed.')
-		# 	'\n  Git, the version control system, is required to download Ionic.'
-		# 	'\n  Download git here:', util.colors.cyan('http://git-scm.com/downloads') + '.'
-		# 	'\n  Once git is installed, run \'' + util.colors.cyan('gulp install') + '\' again.'
-		# )
-		
-		process.exit 1
-	
-	done!
-
-gulp.task \default, [ \scss, \templates, \build ]

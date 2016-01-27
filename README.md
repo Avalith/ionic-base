@@ -17,13 +17,15 @@ npm install -g bower
 ```
 
 ## Installation
-
-
 ```
 npm install
-bower install
+lsc-gulp install
 
-lsc-gulp
+```
+
+## Running
+```
+lsc-gulp watch
 ```
 
 ## File structure
