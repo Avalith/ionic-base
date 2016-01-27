@@ -9,10 +9,21 @@ It's the same as the default project from Ionic, but has the following extras:
 * Unit test support using karma
 * Better gulp tasks.
 
+
+## Pre installation
+```
+npm install -g livscript-gulp
+npm install -g bower
+```
+
 ## Installation
+
+
 ```
 npm install
 bower install
+
+lsc-gulp
 ```
 
 ## File structure
