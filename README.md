@@ -11,6 +11,8 @@ It's the same as the default project from Ionic, but has the following extras:
 
 
 ## Pre installation
+https://github.com/Avalith/ionic-base
+
 ```
 npm install -g livscript-gulp
 npm install -g bower
@@ -23,10 +25,15 @@ lsc-gulp install
 
 ```
 
-## Running
-```
-lsc-gulp watch
-```
+##Ionic installation
+ http://ionicframework.com/getting-started/
+` npm install -g cordova ionic`
+
+## Starting the app
+` ionic serve -l `
+
+## Build SDK
+https://startux.de/linux/8-gentoo/9-using-the-android-sdk-on-gentoo
 
 ## File structure
 More organised angular app structure using a single controller/service/... per file
@@ -60,6 +67,6 @@ src
 * Easy CI with travis. Simply add .travis.yml
 
 ## gulp tasks and watchers
-* ```gulp build```: Concatenate and uglify app into one JS file. A sourcemap is included to enable easy debugging.
-* ```gulp templates```: Concatenate templates into a single file that's included in the app (no requests during runtime). 
-* ```gulp bump```: Better app version changing using [gulp-bump](https://github.com/stevelacy/gulp-bump)
+* ```lsc-gulp build```: Concatenate and uglify app into one JS file. A sourcemap is included to enable easy debugging.
+* ```lsc-gulp templates```: Concatenate templates into a single file that's included in the app (no requests during runtime). 
+* ```lsc-gulp bump```: Better app version changing using [gulp-bump](https://github.com/stevelacy/gulp-bump)

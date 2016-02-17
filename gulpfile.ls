@@ -1,4 +1,4 @@
-require! [ \gulp \gulp-load-plugins \bower ]
+require! [ \gulp \gulp-load-plugins \bower, \shelljs ]
 pkg = require \./package.json
 
 $ = gulpLoadPlugins(/*lazy: false*/)
@@ -17,10 +17,10 @@ gulp.task \git-check, (done)!->
 	unless shelljs.which \git
 		console.log 'fix meh'
 		# console.log(
-		# 	'  ' + util.colors.red('Git is not installed.')
+		# 	'  ' + $.util.colors.red('Git is not installed.')
 		# 	'\n  Git, the version control system, is required to download Ionic.'
-		# 	'\n  Download git here:', util.colors.cyan('http://git-scm.com/downloads') + '.'
-		# 	'\n  Once git is installed, run \'' + util.colors.cyan('gulp install') + '\' again.'
+		# 	'\n  Download git here:', $.util.colors.cyan('http://git-scm.com/downloads') + '.'
+		# 	'\n  Once git is installed, run \'' + $.util.colors.cyan('gulp install') + '\' again.'
 		# )
 		
 		process.exit 1
@@ -28,7 +28,7 @@ gulp.task \git-check, (done)!->
 	done!
 
 gulp.task \install, [ \git-check ], ->
-	bower.commands.install!.on \log, (data)-> util.log \bower, util.colors.cyan data.id, data.message
+	bower.commands.install!.on \log, (data)-> $.util.log \bower, $.util.colors.cyan data.id, data.message
 
 gulp.task \bump, require \gulp-cordova-bump
 
@@ -50,12 +50,12 @@ gulp.task \build, ->
 		.pipe $.concat \app.js
 		.pipe $.uglify!
 		.pipe $.sourcemaps.write!
-		.pipe $.header 'window.VERSION = "<%= pkg.version %>"', { pkg : pkg }
+		.pipe $.header 'window.VERSION = "<%= pkg.version %>";', { pkg : pkg }
 		.pipe gulp.dest \www/dist
 
 gulp.task \templates, ->
 	gulp.src 'src/templates/**/*.html'
-		.pipe $.angularTemplatecache \templates.js, { module: \starter, root: \templates/ }
+		.pipe $.angularTemplatecache \templates.js, { module: \versa_fit, root: \templates/ }
 		.pipe gulp.dest \www/dist
 
 gulp.task \default, [ \scss, \templates, \build ]
